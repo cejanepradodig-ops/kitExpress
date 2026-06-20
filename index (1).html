@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit Express: Máquina de Vendas com IA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --preto: #0A0A0A;
+    --verde-neon: #00FF6A;
+    --verde-medio: #00C853;
+    --verde-escuro: #003D1A;
+    --cinza-claro: #F0F0F0;
+    --cinza-medio: #888;
+    --branco: #FFFFFF;
+    --dourado: #FFD600;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--preto);
+    color: var(--branco);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* TOPO URGÊNCIA */
+  .urgencia-bar {
+    background: var(--verde-neon);
+    color: var(--preto);
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 80px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,255,106,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--verde-escuro);
+    color: var(--verde-neon);
+    border: 1px solid var(--verde-neon);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    max-width: 820px;
+    margin: 0 auto 24px;
+  }
+
+  .hero h1 span {
+    color: var(--verde-neon);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: #AAAAAA;
+    max-width: 580px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cta-principal {
+    display: inline-block;
+    background: var(--verde-neon);
+    color: var(--preto);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 18px 48px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px rgba(0,255,106,0.3);
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-principal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 60px rgba(0,255,106,0.5);
+  }
+
+  .cta-sub {
+    display: block;
+    margin-top: 12px;
+    color: var(--cinza-medio);
+    font-size: 13px;
+  }
+
+  /* DOR */
+  .secao-dor {
+    background: #111;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .secao-dor h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 800;
+    margin-bottom: 40px;
+    line-height: 1.2;
+  }
+
+  .dores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .dor-item {
+    background: #1A1A1A;
+    border: 1px solid #2A2A2A;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: left;
+    font-size: 15px;
+    color: #CCCCCC;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dor-emoji { font-size: 20px; flex-shrink: 0; }
+
+  .virada {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    color: var(--verde-neon);
+    border-top: 1px solid #2A2A2A;
+    padding-top: 40px;
+  }
+
+  /* O QUE É */
+  .secao-produto {
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .label-secao {
+    color: var(--verde-neon);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .secao-produto h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 800;
+    margin-bottom: 16px;
+  }
+
+  .secao-produto p {
+    color: #AAAAAA;
+    max-width: 600px;
+    margin: 0 auto 60px;
+    font-size: 18px;
+  }
+
+  /* MÓDULOS */
+  .modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    text-align: left;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .modulo-card {
+    background: linear-gradient(135deg, #141414, #1A1A1A);
+    border: 1px solid #2A2A2A;
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .modulo-card:hover { border-color: var(--verde-neon); }
+
+  .modulo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--verde-neon);
+  }
+
+  .modulo-numero {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--verde-neon);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .modulo-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .modulo-card p {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .modulo-itens {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modulo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #CCCCCC;
+  }
+
+  .check-verde { color: var(--verde-neon); font-size: 14px; }
+
+  /* BONUS */
+  .bonus-card {
+    background: linear-gradient(135deg, #0D2E18, #0A1F10);
+    border: 1px solid var(--verde-medio);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: 20px;
+    text-align: left;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+  }
+
+  .bonus-label {
+    background: var(--dourado);
+    color: var(--preto);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .bonus-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .bonus-card p { color: #888; font-size: 14px; }
+
+  /* PARA QUEM */
+  .secao-para-quem {
+    background: #111;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .para-quem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    max-width: 860px;
+    margin: 40px auto 0;
+    text-align: left;
+  }
+
+  .para-quem-item {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .para-quem-icon { font-size: 22px; }
+
+  /* RESULTADO */
+  .secao-resultado {
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .resultado-destaque {
+    background: linear-gradient(135deg, #0D2E18, #111);
+    border: 1px solid var(--verde-escuro);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 700px;
+    margin: 40px auto 0;
+  }
+
+  .resultado-destaque blockquote {
+    font-size: clamp(18px, 2.5vw, 22px);
+    line-height: 1.7;
+    color: #DDDDDD;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+
+  .resultado-destaque .autor {
+    color: var(--verde-neon);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  /* PREÇO */
+  .secao-preco {
+    background: #111;
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .preco-card {
+    background: var(--preto);
+    border: 2px solid var(--verde-neon);
+    border-radius: 20px;
+    padding: 48px 40px;
+    max-width: 500px;
+    margin: 40px auto 0;
+    box-shadow: 0 0 80px rgba(0,255,106,0.15);
+  }
+
+  .preco-de {
+    color: var(--cinza-medio);
+    text-decoration: line-through;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .preco-por {
+    font-family: 'Syne', sans-serif;
+    font-size: 64px;
+    font-weight: 800;
+    color: var(--verde-neon);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .preco-desc {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .preco-inclui {
+    text-align: left;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .preco-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #CCCCCC;
+  }
+
+  .garantia {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    margin-top: 24px;
+  }
+
+  .garantia-icon { font-size: 36px; flex-shrink: 0; }
+
+  .garantia-texto strong {
+    display: block;
+    color: var(--branco);
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .garantia-texto span {
+    color: #888;
+    font-size: 13px;
+  }
+
+  /* FAQ */
+  .secao-faq {
+    padding: 80px 20px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #222;
+    padding: 24px 0;
+  }
+
+  .faq-pergunta {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--branco);
+  }
+
+  .faq-resposta {
+    color: #888;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* CTA FINAL */
+  .secao-cta-final {
+    background: linear-gradient(180deg, #0A1F10 0%, var(--preto) 100%);
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .secao-cta-final h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    max-width: 700px;
+    margin: 0 auto 24px;
+    line-height: 1.1;
+  }
+
+  .secao-cta-final h2 span { color: var(--verde-neon); }
+
+  .secao-cta-final p {
+    color: #888;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    font-size: 17px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 32px 20px;
+    text-align: center;
+    color: #444;
+    font-size: 13px;
+    border-top: 1px solid #1A1A1A;
+  }
+
+  /* PULSE ANIMATION */
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 40px rgba(0,255,106,0.3); }
+    50% { box-shadow: 0 0 70px rgba(0,255,106,0.6); }
+  }
+
+  .cta-principal { animation: pulse-green 2.5s ease-in-out infinite; }
+  .cta-principal:hover { animation: none; }
+
+  @media (max-width: 600px) {
+    .preco-por { font-size: 48px; }
+    .preco-card { padding: 32px 24px; }
+    .resultado-destaque { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA URGÊNCIA -->
+<div class="urgencia-bar">
+  🔥 Oferta por tempo limitado — Acesso imediato após o pagamento
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-eyebrow">🚀 Kit Express: Máquina de Vendas com IA</span>
+    <h1>Pare de perder clientes<br>no <span>WhatsApp.</span><br>Comece a vender hoje.</h1>
+    <p class="hero-sub">O guia "Copie e Cole" com prompts prontos, scripts anti-vácuo e calendário de 7 dias para autônomos e negócios locais faturarem mais com IA — sem precisar entender nada de tecnologia.</p>
+    <a href="https://pay.kiwify.com.br/qX3nVnt" class="cta-principal">
+      Quero o Kit Agora por R$37 →
+    </a>
+    <span class="cta-sub">🔒 Pagamento 100% seguro · Acesso imediato · Pix, Cartão ou Boleto</span>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="secao-dor">
+  <div class="container">
+    <h2>Você reconhece alguma dessas situações?</h2>
+    <div class="dores-grid">
+      <div class="dor-item"><span class="dor-emoji">😶</span>Mandou proposta e o cliente sumiu sem explicação</div>
+      <div class="dor-item"><span class="dor-emoji">⏰</span>Passa horas tentando criar um post e não sabe o que escrever</div>
+      <div class="dor-item"><span class="dor-emoji">💸</span>Perde vendas porque não sabe responder objeções de preço</div>
+      <div class="dor-item"><span class="dor-emoji">📱</span>Tem clientes antigos que sumiram e não sabe como reativar</div>
+      <div class="dor-item"><span class="dor-emoji">🤯</span>Ouve falar em IA mas não sabe como usar no seu negócio</div>
+      <div class="dor-item"><span class="dor-emoji">📉</span>Trabalha muito mas o faturamento não cresce como deveria</div>
+    </div>
+    <p class="virada">Se você disse sim para pelo menos uma dessas — o Kit Express foi feito para você.</p>
+  </div>
+</section>
+
+<!-- O QUE É -->
+<section class="secao-produto">
+  <div class="container">
+    <span class="label-secao">O que você vai receber</span>
+    <h2>Tudo o que você precisa para transformar mensagens em vendas</h2>
+    <p>3 módulos práticos + 1 super bônus. É só copiar, colar e lucrar.</p>
+
+    <div class="modulos-grid">
+
+      <div class="modulo-card">
+        <div class="modulo-numero">🧠 Módulo 1</div>
+        <h3>Prompts Secretos para ChatGPT</h3>
+        <p>3 prompts prontos que fazem a IA trabalhar por você — em segundos.</p>
+        <div class="modulo-itens">
+          <div class="modulo-item"><span class="check-verde">✓</span>Criador de Oferta Irresistível</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Gerador de Posts de Alta Conversão</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Destravador de Negociações Difíceis</div>
+        </div>
+      </div>
+
+      <div class="modulo-card">
+        <div class="modulo-numero">💬 Módulo 2</div>
+        <h3>Scripts Anti-Vácuo para WhatsApp</h3>
+        <p>Mensagens prontas para reativar clientes sumidos e fechar vendas travadas.</p>
+        <div class="modulo-itens">
+          <div class="modulo-item"><span class="check-verde">✓</span>Script "Pediu Preço e Sumiu"</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Oferta Secreta de Reativação</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Fechamento por Escassez</div>
+        </div>
+      </div>
+
+      <div class="modulo-card">
+        <div class="modulo-numero">📅 Módulo 3</div>
+        <h3>Calendário Express de 7 Dias</h3>
+        <p>Cronograma exato de conteúdo para gerar desejo e direcionar para o WhatsApp.</p>
+        <div class="modulo-itens">
+          <div class="modulo-item"><span class="check-verde">✓</span>7 tipos de post com roteiro pronto</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Do Mito do Mercado à Oferta Direta</div>
+          <div class="modulo-item"><span class="check-verde">✓</span>Estratégia de stories + feed</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bonus-card" style="margin-top:24px;">
+      <span class="bonus-label">🎁 Super Bônus</span>
+      <h3>Guia de Cliques Express</h3>
+      <p>Automação de 5 minutos para multiplicar mensagens no seu WhatsApp sem pagar plataforma nenhuma. Aumente seus contatos em até 40% com link personalizado e mensagem âncora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="secao-para-quem">
+  <div class="container">
+    <span class="label-secao">Para quem é</span>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:800;">Esse kit é para você que...</h2>
+    <div class="para-quem-grid">
+      <div class="para-quem-item"><span class="para-quem-icon">💇</span>É autônomo ou profissional liberal</div>
+      <div class="para-quem-item"><span class="para-quem-icon">🏪</span>Tem um negócio local ou loja</div>
+      <div class="para-quem-item"><span class="para-quem-icon">📲</span>Usa WhatsApp para vender</div>
+      <div class="para-quem-item"><span class="para-quem-icon">⚡</span>Quer resultados rápidos sem complicação</div>
+      <div class="para-quem-item"><span class="para-quem-icon">🤖</span>Quer usar IA mas não sabe por onde começar</div>
+      <div class="para-quem-item"><span class="para-quem-icon">📈</span>Quer aumentar o faturamento sem aumentar o esforço</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section class="secao-resultado">
+  <div class="container">
+    <span class="label-secao">Por que funciona</span>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:800;">100% prático. Zero enrolação.</h2>
+    <div class="resultado-destaque">
+      <blockquote>"Você não precisa entender de tecnologia, estudar teoria ou fazer curso. Basta identificar a sua necessidade, copiar o prompt ou script, preencher os dados entre colchetes e aplicar diretamente no seu dia a dia para economizar tempo e aumentar o faturamento."</blockquote>
+      <span class="autor">— Kit Express: Máquina de Vendas com IA</span>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="secao-preco" id="comprar">
+  <div class="container">
+    <span class="label-secao">Investimento</span>
+    <h2 style="font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:800;">Acesso completo por muito menos do que você imagina</h2>
+
+    <div class="preco-card">
+      <div class="preco-de">De R$97,00</div>
+      <div class="preco-por">R$37</div>
+      <div class="preco-desc">Pagamento único · Acesso imediato e vitalício</div>
+
+      <div class="preco-inclui">
+        <div class="preco-item"><span class="check-verde">✓</span>Módulo 1: 3 Prompts Secretos para ChatGPT</div>
+        <div class="preco-item"><span class="check-verde">✓</span>Módulo 2: Scripts Anti-Vácuo para WhatsApp</div>
+        <div class="preco-item"><span class="check-verde">✓</span>Módulo 3: Calendário Express de 7 Dias</div>
+        <div class="preco-item"><span style="color:var(--dourado)">★</span>Bônus: Guia de Cliques Express</div>
+      </div>
+
+      <a href="https://pay.kiwify.com.br/qX3nVnt" class="cta-principal" style="display:block;text-align:center;width:100%;">
+        Quero Acesso Agora por R$37 →
+      </a>
+
+      <div class="garantia">
+        <span class="garantia-icon">🛡️</span>
+        <div class="garantia-texto">
+          <strong>Garantia de 7 dias</strong>
+          <span>Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro. Sem burocracia.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="secao-faq">
+  <span class="label-secao" style="display:block;text-align:center;">Dúvidas frequentes</span>
+  <h2 style="font-family:'Syne',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:800;text-align:center;margin-bottom:40px;">Perguntas e Respostas</h2>
+
+  <div class="faq-item">
+    <div class="faq-pergunta">Preciso entender de tecnologia ou IA?</div>
+    <div class="faq-resposta">Não. O kit foi criado para ser 100% prático. É só copiar, preencher os dados do seu negócio entre colchetes e usar. Qualquer pessoa que usa WhatsApp consegue aplicar.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-pergunta">Para qual tipo de negócio funciona?</div>
+    <div class="faq-resposta">Para qualquer autônomo ou negócio local: salão, clínica, advogado, contador, loja, prestador de serviço, coach, consultor — qualquer um que use WhatsApp para atender clientes.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-pergunta">Quando recebo o acesso?</div>
+    <div class="faq-resposta">Imediatamente após o pagamento. Você recebe um e-mail com o link de acesso em segundos. Pix, cartão ou boleto.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-pergunta">Tenho garantia?</div>
+    <div class="faq-resposta">Sim. 7 dias de garantia total. Se por qualquer motivo não gostar, basta pedir o reembolso e devolvemos 100% do valor pago. Sem perguntas.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-pergunta">Preciso assinar mensalmente?</div>
+    <div class="faq-resposta">Não. É um pagamento único de R$37 e o acesso é vitalício. Paga uma vez, usa para sempre.</div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="secao-cta-final">
+  <div class="container">
+    <h2>Chega de perder vendas<br>por falta de <span>resposta certa</span><br>na hora certa.</h2>
+    <p>O Kit Express coloca na sua mão tudo que você precisa para transformar conversas em Pix na sua conta.</p>
+    <a href="https://pay.kiwify.com.br/qX3nVnt" class="cta-principal">
+      Quero o Kit Express por R$37 →
+    </a>
+    <span class="cta-sub" style="color:#555;margin-top:16px;display:block;">🔒 Pagamento seguro · Acesso imediato · Garantia de 7 dias</span>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Kit Express: Máquina de Vendas com IA · Todos os direitos reservados</p>
+  <p style="margin-top:8px;">Resultados podem variar conforme aplicação e nicho de atuação.</p>
+</footer>
+
+</body>
+</html>
