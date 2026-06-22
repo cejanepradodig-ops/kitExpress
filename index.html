@@ -31,19 +31,24 @@
         .problem-item h3 { font-size: 18px; margin-bottom: 10px; color: #f9fafb; }
         .problem-item p { color: #9ca3af; font-size: 15px; }
 
-        /* O que é o produto */
-        .solution-section { padding: 60px 20px; text-align: center; }
-        .solution-section h2 { font-size: 32px; margin-bottom: 20px; font-weight: 700; }
-        .solution-section p { font-size: 17px; color: #94a3b8; max-width: 800px; margin: 0 auto 40px auto; }
-        
-        /* Módulos / O que vem dentro */
-        .grid-modules { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 40px; text-align: left; }
-        @media (max-width: 768px) { .grid-modules { grid-template-columns: 1fr; } }
-        .module-card { background-color: #111827; border: 1px solid #1f2937; padding: 25px; border-radius: 12px; transition: border-color 0.3s; }
-        .module-card:hover { border-color: #10b981; }
-        .module-badge { color: #10b981; font-weight: bold; font-size: 14px; margin-bottom: 8px; display: block; text-transform: uppercase; }
-        .module-card h3 { font-size: 20px; margin-bottom: 12px; color: #ffffff; }
-        .module-card p { font-size: 15px; color: #9ca3af; }
+        /* Transformação Antes x Depois */
+        .transf-section { padding: 40px 0; }
+        .transf-title { text-align: center; font-size: 28px; margin-bottom: 30px; font-weight: 700; }
+        .transf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background-color: #111827; padding: 25px; border-radius: 12px; border: 1px solid #1f2937; margin-bottom: 20px; }
+        @media (max-width: 768px) { .transf-grid { grid-template-columns: 1fr; } }
+        .transf-block.before { border-left: 4px solid #ef4444; padding-left: 15px; }
+        .transf-block.after { border-left: 4px solid #10b981; padding-left: 15px; }
+        .transf-block h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .transf-block.before h4 { color: #ef4444; }
+        .transf-block.after h4 { color: #10b981; }
+        .transf-block p { font-size: 16px; color: #e5e7eb; }
+        .module-info { color: #64748b; font-size: 13px; margin-top: 5px; display: block; }
+
+        /* Para quem é */
+        .target-section { background-color: #111827; padding: 60px 20px; border-radius: 16px; margin: 40px 0; border: 1px solid #1f2937; text-align: center; }
+        .target-title { font-size: 28px; margin-bottom: 30px; font-weight: 700; }
+        .target-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .target-item { background: #1f2937; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; color: #f3f4f6; }
 
         /* Seção Bônus */
         .bonus-section { background: linear-gradient(135deg, #111827 0%, #0f172a 100%); padding: 50px 30px; border-radius: 16px; border: 2px dashed #3b82f6; margin: 40px 0; }
@@ -51,6 +56,11 @@
         .bonus-badge { background-color: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
         .bonus-title { font-size: 28px; font-weight: 700; margin-top: 10px; }
         .bonus-item { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #3b82f6; text-align: left; }
+        .bonus-item h3 { font-size: 18px; color: #f3f4f6; margin-bottom: 5px; }
+
+        /* Depoimento / Citação */
+        .quote-box { background-color: #1f2937; padding: 30px; border-radius: 12px; border-left: 4px solid #10b981; margin: 40px 0; font-style: italic; }
+        .quote-author { display: block; text-align: right; margin-top: 10px; font-style: normal; font-weight: bold; color: #10b981; }
 
         /* Garantia */
         .guarantee-box { display: flex; align-items: center; background-color: #111827; padding: 30px; border-radius: 16px; border: 1px solid #1f2937; margin: 40px 0; gap: 30px; }
@@ -58,6 +68,13 @@
         .guarantee-badge { font-size: 60px; }
         .guarantee-text h3 { font-size: 20px; margin-bottom: 8px; color: #ffffff; }
         .guarantee-text p { font-size: 14px; color: #9ca3af; }
+
+        /* FAQ */
+        .faq-section { padding: 40px 0; }
+        .faq-title { font-size: 28px; text-align: center; margin-bottom: 30px; font-weight: 700; }
+        .faq-item { background-color: #111827; border: 1px solid #1f2937; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+        .faq-item h3 { font-size: 18px; margin-bottom: 8px; color: #10b981; }
+        .faq-item p { color: #9ca3af; font-size: 15px; }
 
         /* Rodapé */
         footer { text-align: center; padding: 40px 20px; color: #4b5563; font-size: 13px; border-top: 1px solid #1f2937; margin-top: 60px; }
@@ -73,87 +90,47 @@
 
     <header>
         <div class="container">
-            <span class="tag">🚀 KIT EXPRESS: MÁQUINA DE VENDAS COM IA</span>
-            <h1>Chega de mandar mensagem e <span>não receber resposta.</span></h1>
-            <p class="subtitle">Descubra como autônomos e negócios locais estão usando a Inteligência Artificial para estruturar scripts, quebrar objeções e fechar vendas em segundos pelo WhatsApp — sem precisar entender nada de tecnologia.</p>
+            <span class="tag">⚡ Acesso imediato após o pagamento — Oferta por tempo limitado</span>
+            <h1>Chega de mandar mensagem e não <span>receber resposta.</span></h1>
+            <p class="subtitle">Descubra como autônomos e negócios locais estão fechando mais vendas pelo WhatsApp usando IA — sem precisar saber nada de tecnologia.</p>
             
             <div class="btn-box">
-                <a href="https://kiwify.com.br" class="btn">Quero Garantir o Kit por Apenas R$ 37</a>
-                <span class="cta-subtext">🔒 Pagamento 100% Seguro • Acesso Imediato</span>
+                <!-- SUBSTITUA O LINK ABAIXO PELO SEU SE PRECISAR -->
+                <a href="https://kiwify.com.br" class="btn">Quero Vender Mais por R$37 →</a>
+                <span class="cta-subtext">🔒 Pagamento seguro · Acesso imediato · Pix, Cartão ou Boleto</span>
             </div>
         </div>
     </header>
 
     <div class="container">
         
-        <!-- O Problema -->
+        <!-- Identificação / Agitação de Dor -->
         <section class="problem-section">
-            <h2 class="problem-title">Você se identifica com algum desses problemas?</h2>
+            <h2 class="problem-title">Isso está acontecendo com você?</h2>
             <div class="problem-grid">
-                <div class="problem-item">
-                    <h3>O cliente some no "Vácuo"</h3>
-                    <p>Você passa o preço do seu serviço ou produto e a pessoa simplesmente nunca mais responde ou diz que "vai pensar".</p>
-                </div>
-                <div class="problem-item">
-                    <h3>Falta de tempo para responder</h3>
-                    <p>Muitas mensagens chegando ao mesmo tempo e você não dá conta de atender todo mundo com a qualidade que gera vendas.</p>
-                </div>
-                <div class="problem-item">
-                    <h3>Não saber o que falar</h3>
-                    <p>Ficar travado na hora de negociar ou quando o cliente faz perguntas difíceis e pede desconto.</p>
-                </div>
-                <div class="problem-item">
-                    <h3>Processo manual cansativo</h3>
-                    <p>Escrever o mesmo texto dezenas de vezes por dia em vez de focar na entrega ou no crescimento do negócio.</p>
-                </div>
+                <div class="problem-item"><h3>😤 Sumiço após proposta</h3><p>Manda proposta no WhatsApp e o cliente desaparece sem dar satisfação.</p></div>
+                <div class="problem-item"><h3>⏰ Bloqueio criativo</h3><p>Passa horas tentando escrever um post e no fim não posta nada.</p></div>
+                <div class="problem-item"><h3>💸 Muito esforço, pouco retorno</h3><p>Sente que está trabalhando muito mas o dinheiro não aparece.</p></div>
+                <div class="problem-item"><h3>😰 Objeções travadas</h3><p>Não sabe o que falar quando o cliente diz "tá caro" ou "vou pensar".</p></div>
+                <div class="problem-item"><h3>📱 Clientes esquecidos</h3><p>Tem clientes antigos que sumiram e não sabe como chamar de volta.</p></div>
+                <div class="problem-item"><h3>🤯 Medo da tecnologia</h3><p>Quer usar IA mas não sabe por onde começar sem perder tempo.</p></div>
             </div>
+            <p style="text-align:center; font-size:18px; margin-top:30px; font-weight:bold; color:#10b981;">E se você pudesse copiar uma resposta pronta, colar no WhatsApp e fechar a venda em minutos?</p>
         </section>
 
-        <!-- A Solução -->
-        <section class="solution-section">
-            <h2>O Que É o Kit Express?</h2>
-            <p>Um método prático e direto ao ponto focado em transformar o seu WhatsApp comercial em um atendente de alta conversão usando o poder do ChatGPT e ferramentas gratuitas de IA.</p>
+        <!-- Seção Antes e Depois estruturada -->
+        <section class="transf-section">
+            <h2 class="transf-title">Do problema ao resultado — com um simples Copie e Cole</h2>
             
-            <div class="grid-modules">
-                <div class="module-card">
-                    <span class="module-badge">Módulo 1</span>
-                    <h3>Atendimento Magnético</h3>
-                    <p>Como criar uma saudação e uma abordagem inicial que prendem a atenção do cliente nos primeiros 5 segundos.</p>
-                </div>
-                <div class="module-card">
-                    <span class="module-badge">Módulo 2</span>
-                    <h3>Engenharia de Prompts de Vendas</h3>
-                    <p>Copie e cole comandos exatos para fazer a IA escrever ofertas irresistíveis personalizadas para o seu nicho de atuação.</p>
-                </div>
-                <div class="module-card">
-                    <span class="module-badge">Módulo 3</span>
-                    <h3>O Exterminador de Objeções</h3>
-                    <p>Scripts validados por Inteligência Artificial para responder instantaneamente quando o cliente diz "tá caro" ou "falo com meu marido".</p>
-                </div>
-                <div class="module-card">
-                    <span class="module-badge">Módulo 4</span>
-                    <h3>Fechamento Express</h3>
-                    <p>Técnicas psicológicas integradas à tecnologia para fazer o cliente pedir o link de pagamento sem hesitar.</p>
-                </div>
+            <div class="transf-grid">
+                <div class="transf-block before"><h4>Antes</h4><p>Cliente sumiu depois do orçamento</p></div>
+                <div class="transf-block after"><h4>Agora</h4><p>Você tem 3 mensagens prontas que reativam clientes sumidos sem parecer desesperado — e eles respondem.<span class="module-info">Módulo 2 — Scripts WhatsApp</span></p></div>
             </div>
-        </section>
 
-        <!-- Seção Bônus -->
-        <section class="bonus-section">
-            <div class="bonus-header">
-                <span class="bonus-badge">Presente Exclusivo</span>
-                <h2 class="bonus-title">Ganhando Hoje, Você Leva +2 Bônus</h2>
+            <div class="transf-grid">
+                <div class="transf-block before"><h4>Antes</h4><p>"Tá caro" — e você não sabia o que responder</p></div>
+                <div class="transf-block after"><h4>Agora</h4><p>A IA gera 3 respostas persuasivas para qualquer objeção em segundos. Você escolhe, copia e manda.<span class="module-info">Módulo 1 — Prompts ChatGPT</span></p></div>
             </div>
-            <div class="bonus-item">
-                <strong>🎁 Bônus #1: Guia Secreto de Modelos de Mensagens prontas</strong> — Estruturas prontas para Black Friday, datas comemorativas e recuperação de clientes antigos.
-            </div>
-            <div class="bonus-item">
-                <strong>🎁 Bônus #2: Lista de Ferramentas Gratuitas de IA</strong> — Os melhores aplicativos e extensões para automatizar partes do seu atendimento sem gastar 1 centavo.
-            </div>
-        </section>
 
-        <!-- Garantia -->
-        <section class="guarantee-box">
-            <div class="guarantee-badge">🛡️</div>
-            <div class="guarantee-text">
-                <h3>Garantia Incondicional de 7 Dias</h3>
+            <div class="transf-grid">
+                <div class="transf-block before"><h4>Antes</h4><p>Horas tentando criar um post sem resultado</p></div>
