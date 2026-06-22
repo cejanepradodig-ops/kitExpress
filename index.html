@@ -5,84 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kit Express - Máquina de Vendas com IA</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #ffffff; line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        /* Topo / Headline */
-        header { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #0f172a 0%, #0b0f19 100%); }
-        .tag { background-color: #1e293b; color: #10b981; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; letter-spacing: 1px; display: inline-block; margin-bottom: 20px; text-transform: uppercase; border: 1px solid #334155; }
-        h1 { font-size: 42px; line-height: 1.2; font-weight: 800; margin-bottom: 24px; color: #ffffff; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; padding: 50px 20px; background: #0f172a; border-bottom: 2px solid #1f2937; }
+        .tag { background-color: #1e293b; color: #10b981; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+        h1 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
         h1 span { color: #10b981; }
-        .subtitle { font-size: 18px; color: #94a3b8; max-width: 700px; margin: 0 auto 40px auto; }
-        
-        /* Botão Principal */
+        .subtitle { font-size: 17px; color: #94a3b8; margin-bottom: 30px; }
         .btn-box { text-align: center; margin: 30px 0; }
-        .btn { display: inline-block; background-color: #10b981; color: #000000; text-decoration: none; font-size: 20px; font-weight: bold; padding: 20px 40px; border-radius: 50px; box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); transition: transform 0.2s, background-color 0.2s; animation: pulse 2s infinite; }
-        .btn:hover { transform: scale(1.05); background-color: #059669; }
+        .btn { display: inline-block; background-color: #10b981; color: #000000; text-decoration: none; font-size: 20px; font-weight: bold; padding: 18px 36px; border-radius: 50px; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+        .btn:hover { background-color: #059669; }
         .cta-subtext { font-size: 13px; color: #64748b; margin-top: 10px; display: block; }
-
-        /* Seção do Problema */
-        .problem-section { background-color: #111827; padding: 60px 20px; border-radius: 16px; margin: 40px 0; border: 1px solid #1f2937; }
-        .problem-title { font-size: 28px; text-align: center; margin-bottom: 30px; color: #ef4444; font-weight: 700; }
-        .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .problem-grid { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
-        .problem-item { background: #1f2937; padding: 20px; border-radius: 12px; border-left: 4px solid #ef4444; }
-        .problem-item h3 { font-size: 18px; margin-bottom: 10px; color: #f9fafb; }
-        .problem-item p { color: #9ca3af; font-size: 15px; }
-
-        /* Transformação Antes x Depois */
-        .transf-section { padding: 40px 0; }
-        .transf-title { text-align: center; font-size: 28px; margin-bottom: 30px; font-weight: 700; }
-        .transf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background-color: #111827; padding: 25px; border-radius: 12px; border: 1px solid #1f2937; margin-bottom: 20px; }
-        @media (max-width: 768px) { .transf-grid { grid-template-columns: 1fr; } }
-        .transf-block.before { border-left: 4px solid #ef4444; padding-left: 15px; }
-        .transf-block.after { border-left: 4px solid #10b981; padding-left: 15px; }
-        .transf-block h4 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .transf-block.before h4 { color: #ef4444; }
-        .transf-block.after h4 { color: #10b981; }
-        .transf-block p { font-size: 16px; color: #e5e7eb; }
-        .module-info { color: #64748b; font-size: 13px; margin-top: 5px; display: block; }
-
-        /* Para quem é */
-        .target-section { background-color: #111827; padding: 60px 20px; border-radius: 16px; margin: 40px 0; border: 1px solid #1f2937; text-align: center; }
-        .target-title { font-size: 28px; margin-bottom: 30px; font-weight: 700; }
-        .target-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .target-item { background: #1f2937; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: 600; color: #f3f4f6; }
-
-        /* Seção Bônus */
-        .bonus-section { background: linear-gradient(135deg, #111827 0%, #0f172a 100%); padding: 50px 30px; border-radius: 16px; border: 2px dashed #3b82f6; margin: 40px 0; }
-        .bonus-header { text-align: center; margin-bottom: 30px; }
-        .bonus-badge { background-color: #3b82f6; color: #ffffff; padding: 4px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .bonus-title { font-size: 28px; font-weight: 700; margin-top: 10px; }
-        .bonus-item { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #3b82f6; text-align: left; }
-
-        /* Depoimento / Citação */
-        .quote-box { background-color: #1f2937; padding: 30px; border-radius: 12px; border-left: 4px solid #10b981; margin: 40px 0; font-style: italic; }
-        .quote-author { display: block; text-align: right; margin-top: 10px; font-style: normal; font-weight: bold; color: #10b981; }
-
-        /* Garantia */
-        .guarantee-box { display: flex; align-items: center; background-color: #111827; padding: 30px; border-radius: 16px; border: 1px solid #1f2937; margin: 40px 0; gap: 30px; }
-        @media (max-width: 600px) { .guarantee-box { flex-direction: column; text-align: center; } }
-        .guarantee-badge { font-size: 60px; }
-        .guarantee-text h3 { font-size: 20px; margin-bottom: 8px; color: #ffffff; }
-        .guarantee-text p { font-size: 14px; color: #9ca3af; }
-
-        /* FAQ */
-        .faq-section { padding: 40px 0; }
-        .faq-title { font-size: 28px; text-align: center; margin-bottom: 30px; font-weight: 700; }
-        .faq-item { background-color: #111827; border: 1px solid #1f2937; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
-        .faq-item h3 { font-size: 18px; margin-bottom: 8px; color: #10b981; }
-        .faq-item p { color: #9ca3af; font-size: 15px; }
-
-        /* Rodapé */
-        footer { text-align: center; padding: 40px 20px; color: #4b5563; font-size: 13px; border-top: 1px solid #1f2937; margin-top: 60px; }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
-            70% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
+        .section { background-color: #111827; padding: 40px 20px; border-radius: 12px; margin: 30px 0; border: 1px solid #1f2937; }
+        .title { font-size: 24px; text-align: center; margin-bottom: 25px; font-weight: 700; color: #f3f4f6; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } h1 { font-size: 28px; } }
+        .item { background: #1f2937; padding: 15px; border-radius: 8px; border-left: 4px solid #ef4444; }
+        .item.green { border-left-color: #10b981; }
+        .item h3 { font-size: 16px; margin-bottom: 5px; }
+        .item p { color: #9ca3af; font-size: 14px; }
+        .transf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #1f2937; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+        .transf-red { border-left: 4px solid #ef4444; padding-left: 10px; }
+        .transf-green { border-left: 4px solid #10b981; padding-left: 10px; }
+        .transf-grid h4 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; }
+        .transf-red h4 { color: #ef4444; }
+        .transf-green h4 { color: #10b981; }
+        .badge-module { font-size: 11px; color: #64748b; display: block; margin-top: 5px; }
+        .bonus-box { border: 2px dashed #3b82f6; padding: 25px; border-radius: 12px; background: #111827; margin: 30px 0; }
+        .faq-item { background: #1f2937; padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+        .faq-item h3 { font-size: 16px; color: #10b981; margin-bottom: 5px; }
+        .faq-item p { color: #9ca3af; font-size: 14px; }
+        footer { text-align: center; padding: 30px 20px; color: #4b5563; font-size: 12px; border-top: 1px solid #1f2937; }
     </style>
 </head>
 <body>
@@ -92,7 +46,6 @@
             <span class="tag">⚡ Acesso imediato após o pagamento — Oferta por tempo limitado</span>
             <h1>Chega de mandar mensagem e não <span>receber resposta.</span></h1>
             <p class="subtitle">Descubra como autônomos e negócios locais estão fechando mais vendas pelo WhatsApp usando IA — sem precisar saber nada de tecnologia.</p>
-            
             <div class="btn-box">
                 <a href="https://kiwify.com.br" class="btn">Quero Vender Mais por R$37 →</a>
                 <span class="cta-subtext">🔒 Pagamento seguro · Acesso imediato · Pix, Cartão ou Boleto</span>
@@ -102,39 +55,103 @@
 
     <div class="container">
         
-        <!-- Identificação / Agitação de Dor -->
-        <section class="problem-section">
-            <h2 class="problem-title">Isso está acontecendo com você?</h2>
-            <div class="problem-grid">
-                <div class="problem-item"><h3>😤 Sumiço após proposta</h3><p>Manda proposta no WhatsApp e o cliente desaparece sem dar satisfação.</p></div>
-                <div class="problem-item"><h3>⏰ Bloqueio criativo</h3><p>Passa horas tentando escrever um post e no fim não posta nada.</p></div>
-                <div class="problem-item"><h3>💸 Muito esforço, pouco retorno</h3><p>Sente que está trabalhando muito mas o dinheiro não aparece.</p></div>
-                <div class="problem-item"><h3>😰 Objeções travadas</h3><p>Não sabe o que falar quando o cliente diz "tá caro" ou "vou pensar".</p></div>
-                <div class="problem-item"><h3>📱 Clientes esquecidos</h3><p>Tem clientes antigos que sumiram e não sabe como chamar de volta.</p></div>
-                <div class="problem-item"><h3>🤯 Medo da tecnologia</h3><p>Quer usar IA mas não sabe por onde começar sem perder tempo.</p></div>
+        <!-- Dores -->
+        <section class="section">
+            <h2 class="title" style="color: #ef4444;">Isso está acontecendo com você?</h2>
+            <div class="grid">
+                <div class="item"><h3>😤 Sumiço após proposta</h3><p>Manda proposta no WhatsApp e o cliente desaparece sem dar satisfação.</p></div>
+                <div class="item"><h3>⏰ Bloqueio criativo</h3><p>Passa horas tentando escrever um post e no fim não posta nada.</p></div>
+                <div class="item"><h3>💸 Muito esforço, pouco retorno</h3><p>Sente que está trabalhando muito mas o dinheiro não aparece.</p></div>
+                <div class="item"><h3>😰 Objeções travadas</h3><p>Não sabe o que falar quando o cliente diz "tá caro" ou "vou pensar".</p></div>
+                <div class="item"><h3>📱 Clientes esquecidos</h3><p>Tem clientes antigos que sumiram e não sabe como chamar de volta.</p></div>
+                <div class="item"><h3>🤯 Medo da tecnologia</h3><p>Quer usar IA mas não sabe por onde começar sem perder tempo.</p></div>
             </div>
-            <p style="text-align:center; font-size:18px; margin-top:30px; font-weight:bold; color:#10b981;">E se você pudesse copiar uma resposta pronta, colar no WhatsApp e fechar a venda in minutos?</p>
+            <p style="text-align:center; font-size:16px; margin-top:25px; font-weight:bold; color:#10b981;">E se você pudesse copiar uma resposta pronta, colar no WhatsApp e fechar a venda em minutos?</p>
         </section>
 
-        <!-- Seção Antes e Depois estruturada -->
-        <section class="transf-section">
-            <h2 class="transf-title">Do problema ao resultado — com um simples Copie e Cole</h2>
+        <!-- Antes x Depois -->
+        <section class="section">
+            <h2 class="title">Do problema ao resultado — Com um simples Copie e Cole</h2>
             
             <div class="transf-grid">
-                <div class="transf-block before"><h4>Antes</h4><p>Cliente sumiu depois do orçamento</p></div>
-                <div class="transf-block after"><h4>Agora</h4><p>Você tem 3 mensagens prontas que reativam clientes sumidos sem parecer desesperado — e eles respondem.<span class="module-info">Módulo 2 — Scripts WhatsApp</span></p></div>
+                <div class="transf-red"><h4>Antes</h4><p>Cliente sumiu depois do orçamento</p></div>
+                <div class="transf-green"><h4>Agora</h4><p>Você tem 3 mensagens prontas que reativam clientes sumidos sem parecer desesperado — e eles respondem.<span class="badge-module">Módulo 2 — Scripts WhatsApp</span></p></div>
             </div>
 
             <div class="transf-grid">
-                <div class="transf-block before"><h4>Antes</h4><p>"Tá caro" — e você não sabia o que responder</p></div>
-                <div class="transf-block after"><h4>Agora</h4><p>A IA gera 3 respostas persuasivas para qualquer objeção em segundos. Você escolhe, copia e manda.<span class="module-info">Módulo 1 — Prompts ChatGPT</span></p></div>
+                <div class="transf-red"><h4>Antes</h4><p>"Tá caro" — e você não sabia o que responder</p></div>
+                <div class="transf-green"><h4>Agora</h4><p>A IA gera 3 respostas persuasivas para qualquer objeção em segundos. Você escolhe, copia e manda.<span class="badge-module">Módulo 1 — Prompts ChatGPT</span></p></div>
             </div>
 
             <div class="transf-grid">
-                <div class="transf-block before"><h4>Antes</h4><p>Horas tentando criar um post sem resultado</p></div>
-                <div class="transf-block after"><h4>Agora</h4><p>Você tem 7 dias de conteúdo planejado que atrai clientes direto para o seu WhatsApp — pronto para postar.<span class="module-info">Módulo 3 — Calendário 7 Dias</span></p></div>
+                <div class="transf-red"><h4>Antes</h4><p>Horas tentando criar um post sem resultado</p></div>
+                <div class="transf-green"><h4>Agora</h4><p>Você tem 7 dias de conteúdo planejado que atrai clientes direto para o seu WhatsApp — pronto para postar.<span class="badge-module">Módulo 3 — Calendário 7 Dias</span></p></div>
             </div>
         </section>
 
         <!-- Super Bônus -->
-        <section class="bonus-section">
+        <div class="bonus-box">
+            <p style="color: #3b82f6; font-weight: bold; text-transform: uppercase; font-size: 12px; margin-bottom: 5px;">🎁 Super Bônus</p>
+            <h3 style="font-size: 20px; margin-bottom: 10px;">Aumente seus contatos no WhatsApp em até 40%</h3>
+            <p style="color: #94a3b8; font-size: 15px;">Um link personalizado que faz o cliente te chamar com a mensagem certa — sem precisar pagar nenhuma plataforma de automação. Leva 5 minutos para configurar.</p>
+        </div>
+
+        <!-- Para quem é -->
+        <section class="section">
+            <h2 class="title">Feito para quem vende pelo WhatsApp</h2>
+            <div class="grid">
+                <div class="item green"><h3>💇 Estéticas e Salões</h3></div>
+                <div class="item green"><h3>🔧 Autônomos e Serviços</h3></div>
+                <div class="item green"><h3>🏪 Lojas e Comércios Locais</h3></div>
+                <div class="item green"><h3>📋 Consultores e Advogados</h3></div>
+            </div>
+        </section>
+
+        <!-- Oferta -->
+        <section class="section" style="border: 2px solid #10b981; text-align: center;">
+            <p style="text-decoration: line-through; color: #ef4444; font-size: 16px;">De R$97,00</p>
+            <h2 style="font-size: 50px; color: #10b981; margin: 5px 0;">R$37</h2>
+            <p style="font-weight: bold; margin-bottom: 20px; font-size: 14px;">Pagamento único · Acesso imediato e vitalício</p>
+            <a href="https://kiwify.com.br" class="btn">Quero Vender Mais Agora →</a>
+        </section>
+
+        <!-- Garantia -->
+        <div class="transf-grid" style="background: #111827; border: 1px solid #1f2937; padding: 25px;">
+            <div style="font-size: 40px; text-align: center;">🛡️</div>
+            <div>
+                <h3 style="margin-bottom: 5px;">Garantia de 7 dias</h3>
+                <p style="color: #9ca3af; font-size: 14px;">Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro de forma imediata.</p>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2 class="title">Perguntas frequentes</h2>
+            <div class="faq-item">
+                <h3>Preciso saber usar IA ou ChatGPT?</h3>
+                <p>Não. É só copiar, preencher os dados do seu negócio e usar. Se você sabe usar o WhatsApp, você consegue usar.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Quando recebo o acesso?</h3>
+                <p>Imediatamente após o pagamento via e-mail.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Preciso pagar mensalidade?</h3>
+                <p>Não. É R$37 uma única vez.</p>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <div class="btn-box" style="margin-top: 40px;">
+            <h2 style="font-size: 22px; margin-bottom: 15px;">Sua próxima venda pode acontecer hoje.</h2>
+            <a href="https://kiwify.com.br" class="btn">Quero o Kit Express por R$37 →</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Kit Express: Máquina de Vendas com IA · Todos os direitos reservados</p>
+    </footer>
+
+</body>
+</html>
