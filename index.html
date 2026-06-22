@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kit Express: Máquina de Vendas com IA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://googleapis.com">
+<link href="https://googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -22,7 +22,7 @@ body{background:#0B0B0F;color:#fff;font-family:'Inter',sans-serif;font-size:16px
 .hero h1{font-family:'Montserrat',sans-serif;font-size:clamp(32px,6vw,64px);font-weight:900;line-height:1.05;margin-bottom:24px;letter-spacing:-1px}
 .hero h1 em{font-style:normal;color:#00FF6A}
 .hero-sub{font-size:clamp(16px,2vw,19px);color:#AAA;max-width:560px;margin:0 auto 44px;line-height:1.75}
-.cta-btn{display:inline-block;background:#00FF6A;color:#0B0B0F;font-family:'Montserrat',sans-serif;font-weight:900;font-size:17px;padding:18px 44px;border-radius:8px;text-decoration:none;letter-spacing:.3px;transition:transform .2s,box-shadow .2s;box-shadow:0 0 40px rgba(0,255,106,.35);cursor:pointer;border:none;animation:pulsar 2.5s ease-in-out infinite}
+.cta-btn{display:inline-block;background:#00FF6A;color:#0B0B0F;font-family:'Montserrat',sans-serif;font-weight:900;font-size:17px;padding:18px 44px;border-radius:8px;text-decoration:none;letter-spacing:.3px;transition:transform .2s,box-shadow .2s;box-shadow:0 0 40px rgba(0,255,106,.35);cursor:pointer;border:none;animation:pulsar 2.5s ease-in-out infinite;text-align:center}
 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(0,255,106,.55);animation:none}
 @keyframes pulsar{0%,100%{box-shadow:0 0 40px rgba(0,255,106,.35)}50%{box-shadow:0 0 65px rgba(0,255,106,.6)}}
 .cta-sub{display:block;margin-top:12px;color:#555;font-size:13px}
@@ -45,9 +45,9 @@ body{background:#0B0B0F;color:#fff;font-family:'Inter',sans-serif;font-size:16px
 .t-card{background:linear-gradient(135deg,#13131A,#1A1A24);border:1px solid #222;border-radius:16px;padding:28px;position:relative;overflow:hidden;transition:border-color .3s}
 .t-card:hover{border-color:#00FF6A}
 .t-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#00FF6A}
-.t-antes{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.t-depois{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.3}
-.t-desc{font-size:14px;color:#777;line-height:1.6}
+.t-antes{font-size:12px;color:#FF3D00;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:bold}
+.t-depois{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:#00FF6A;margin-bottom:10px;line-height:1.3}
+.t-desc{font-size:14px;color:#CCC;line-height:1.6}
 .modulo-tag{display:inline-block;background:rgba(0,255,106,.1);color:#00FF6A;font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;margin-top:12px}
 
 /* BONUS */
@@ -55,12 +55,12 @@ body{background:#0B0B0F;color:#fff;font-family:'Inter',sans-serif;font-size:16px
 .bonus{background:linear-gradient(135deg,#0D2818,#111);border:1px solid rgba(0,255,106,.3);border-radius:16px;padding:28px;text-align:left}
 .bonus-label{background:#FFD600;color:#0B0B0F;font-size:11px;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:100px;text-transform:uppercase;display:inline-block;margin-bottom:14px}
 .bonus h3{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;margin-bottom:8px}
-.bonus p{color:#777;font-size:14px}
+.bonus p{color:#aaa;font-size:14px}
 
 /* PARA QUEM */
 .sec-pq{background:#111116;padding:80px 20px;text-align:center}
 .pq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:860px;margin:44px auto 0;text-align:left}
-.pq-item{background:#18181F;border-radius:12px;padding:18px;display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500}
+.pq-item{background:#18181F;border-radius:12px;padding:18px;display:flex;align-items:center;gap:14px;font-size:15px;font-weight:500;border:1px solid #222}
 .pq-icon{font-size:22px}
 
 /* DEPOIMENTO / PROVA */
@@ -86,14 +86,14 @@ body{background:#0B0B0F;color:#fff;font-family:'Inter',sans-serif;font-size:16px
 /* FAQ */
 .sec-faq{padding:80px 20px;max-width:680px;margin:0 auto}
 .faq-item{border-bottom:1px solid #1E1E26;padding:24px 0}
-.faq-q{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px}
-.faq-a{color:#777;font-size:15px;line-height:1.7}
+.faq-q{font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;text-align:left}
+.faq-a{color:#777;font-size:15px;line-height:1.7;text-align:left}
 
 /* CTA FINAL */
 .sec-final{background:linear-gradient(180deg,#0A1F10 0%,#0B0B0F 100%);padding:100px 20px;text-align:center}
 .sec-final h2{font-family:'Montserrat',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:900;max-width:680px;margin:0 auto 24px;line-height:1.1}
 .sec-final h2 em{font-style:normal;color:#00FF6A}
-.sec-final p{color:#555;max-width:480px;margin:0 auto 40px;font-size:17px}
+.sec-final p{color:#aaa;max-width:480px;margin:0 auto 40px;font-size:17px}
 
 footer{background:#050507;padding:32px 20px;text-align:center;color:#333;font-size:13px;border-top:1px solid #131318}
 
@@ -110,9 +110,35 @@ footer{background:#050507;padding:32px 20px;text-align:center;color:#333;font-si
     <span class="eyebrow">🚀 Kit Express: Máquina de Vendas com IA</span>
     <h1>Chega de mandar mensagem<br>e não <em>receber resposta.</em></h1>
     <p class="hero-sub">Descubra como autônomos e negócios locais estão fechando mais vendas pelo WhatsApp usando IA — sem precisar saber nada de tecnologia.</p>
-    <a href="https://pay.kiwify.com.br/qX3nVnt" class="cta-btn">Quero Vender Mais por R$37 →</a>
+    <a href="https://kiwify.com.br" class="cta-btn">Quero Vender Mais por R$37 →</a>
+    <span class="cta-sub">🔒 Pagamento seguro · Acesso imediato · Pix, Cartão ou Boleto</span>
   </div>
 </section>
 
-</body>
-</html>
+<!-- DOR -->
+<section class="sec-dor">
+  <div class="container">
+    <h2>Isso está acontecendo com você?</h2>
+    <p class="intro">Você não está sozinho. Isso é o que a maioria dos autônomos sente antes de descobrir o Kit Express:</p>
+    <div class="dores">
+      <div class="dor"><span class="dor-icon">😤</span> Manda proposta no WhatsApp e o cliente desaparece sem dar satisfação.</div>
+      <div class="dor"><span class="dor-icon">⏰</span> Passa horas tentando escrever um post e no fim não posta nada.</div>
+      <div class="dor"><span class="dor-icon">💸</span> Sente que está trabalhando muito, mas o dinheiro não aparece.</div>
+      <div class="dor"><span class="dor-icon">😰</span> Não sabe o que falar quando o cliente diz "tá caro" ou "vou pensar".</div>
+      <div class="dor"><span class="dor-icon">📱</span> Tem clientes antigos que sumiram e não sabe como chamar de volta.</div>
+      <div class="dor"><span class="dor-icon">🤯</span> Quer usar IA, mas não sabe por onde começar sem perder tempo.</div>
+    </div>
+    <div class="virada">
+      <p>E se você pudesse copiar uma resposta pronta, colar no WhatsApp e fechar a venda em minutos?</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMAÇÃO / CONTEÚDO -->
+<section class="sec-transform">
+  <div class="container">
+    <span class="label">O que muda na sua vida</span>
+    <h2>Do problema ao resultado — com um simples Copie e Cole</h2>
+    <div class="transform-grid">
+      <div class="t-card">
+        <div class="t-antes">Antes: Cliente sumiu depois do orçamento</div>
